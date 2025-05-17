@@ -100,7 +100,7 @@ class WeatherService {
         dailySet.add(date);
 
         forecast.push({
-          city: '',
+          city: currentWeather.city,
           date: item.dt_txt,
           icon: item.weather[0].icon,
           description: item.weather[0].description,
@@ -119,12 +119,27 @@ class WeatherService {
   // Complete getWeatherForCity method
   async getWeatherForCity(city: string) {
     this.city = city;
-    const coordinates = await this.fetchAndDestructureLocationData();
-    const weatherData = await this.fetchWeatherData(coordinates);
-    const currentWeather = this.parseCurrentWeather(weatherData);
-    
-    return this.buildForecastArray(currentWeather, weatherData.list);
+
+    try {
+      const coordinates = await this.fetchAndDestructureLocationData();
+      const weatherData = await this.fetchWeatherData(coordinates);
+      const currentWeather = this.parseCurrentWeather(weatherData);
+
+      return this.buildForecastArray(currentWeather, weatherData.list);
+    } catch (error) {
+      console.error('OpenWeather API error:', error);
+      throw new Error('Failed to fetch weather data');
+    }
+
+    //   this.city = city;
+    //   const coordinates = await this.fetchAndDestructureLocationData();
+    //   const weatherData = await this.fetchWeatherData(coordinates);
+    //   const currentWeather = this.parseCurrentWeather(weatherData);
+
+    //   return this.buildForecastArray(currentWeather, weatherData.list);
+    // }
   }
 }
 
-export default new WeatherService();
+const weatherService = new WeatherService();
+export default weatherService;
