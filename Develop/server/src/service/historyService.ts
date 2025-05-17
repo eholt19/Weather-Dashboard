@@ -1,8 +1,12 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 import { v4 as uuidv4 } from 'uuid';
+import { fileURLToPath } from 'url';
 
-const filePath = path.resolve(__dirname, '../db/searchHistory.json');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const filePath = path.resolve(__dirname, '../../db/searchHistory.json');
 
 // Define a City class with name and id properties
 export interface City {
