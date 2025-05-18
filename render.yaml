@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: weather-dashboard
+    env: node
+    rootDir: Develop/server
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: OPENWEATHER_API_KEY
+        value: f5f2a9646ca20384d670ec2505739459
